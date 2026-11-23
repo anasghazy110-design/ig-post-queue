@@ -21,7 +21,8 @@ jobs:
       - name: Publish due posts
         run: python3 publish.py
         env:
-          ALL_SECRETS: ${{ toJSON(secrets) }}
+          IG_TOKEN_763726933494660: ${{ secrets.IG_TOKEN_763726933494660 }}
+          IG_TOKEN_369304739757772: ${{ secrets.IG_TOKEN_369304739757772 }}
 
       - name: Save queue
         run: |
