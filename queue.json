@@ -138,7 +138,9 @@
                       "paths":  [
                                     "media/20261123130806-d38a36/1.jpg"
                                 ],
-                      "status":  "pending"
+                      "status":  "published",
+                      "ig_media_id":  "18439254769147877",
+                      "published_at":  1795436153
                   }
               ]
 }
