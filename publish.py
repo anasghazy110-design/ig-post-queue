@@ -16,7 +16,7 @@ VER = "v27.0"
 QUEUE = "queue.json"
 MAX_ATTEMPTS = 3
 
-secrets = json.loads(os.environ.get("ALL_SECRETS") or "{}")
+secrets = {k: v for k, v in os.environ.items() if k.startswith("IG_TOKEN_") and v}
 
 
 def call(method, path, params):
