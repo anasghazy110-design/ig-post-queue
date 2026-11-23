@@ -29,11 +29,11 @@ jobs:
           git config user.name "scheduler-bot"
           git config user.email "scheduler-bot@users.noreply.github.com"
           if git diff --quiet && git diff --cached --quiet; then exit 0; fi
-          cp queue.json "/mine.json"
+          cp queue.json /tmp/mine.json
           for i in 1 2 3 4 5 6; do
             git fetch -q origin main
             git reset -q --hard origin/main
-            python3 publish.py merge "/mine.json"
+            python3 publish.py merge /tmp/mine.json
             git add -A
             if git diff --cached --quiet; then exit 0; fi
             git commit -q -m "instagram publish run"
