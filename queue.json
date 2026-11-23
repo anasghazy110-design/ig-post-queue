@@ -121,6 +121,20 @@
                                     "media/20261123125545-9998b4/6.jpg"
                                 ],
                       "status":  "pending"
+                  },
+                  {
+                      "id":  "20261123125614-1dd5da",
+                      "page_id":  "369304739757772",
+                      "ig_id":  "17841400320574467",
+                      "time":  1795946400,
+                      "caption":  "لابتوبك فيه Type-C بس، والشاشة HDMI أو DisplayPort؟ مش محتاج أدابتر وكابل.\nكابل واحد من Type-C على طول للشاشة. Manhattan لو شاشتك DisplayPort، والكابل التاني لو HDMI وطوله 1.8 متر. الاتنين بيطلعوا صورة 4K.\nمهم: لازم مدخل الـ Type-C في جهازك يكون بيطلّع صورة (DP Alt Mode). لو مش متأكد ابعتلنا موديل اللابتوب ونقولك.\n— — — — — — — — — — — —\n📍 بورسعيد – حي العرب – شارع أوجينا وأبو الحسن\n🕚 من 11 ص لـ 11 م يوميًا\n🕌 بنقفل وقت الصلاة ❤️\n\n#تكنيكال_ستور #Manhattan #TypeC #DisplayPort #HDMI #بورسعيد",
+                      "images":  [
+                                     "https://raw.githubusercontent.com/anasghazy110-design/ig-post-queue/main/media/20261123125614-1dd5da/1.jpg"
+                                 ],
+                      "paths":  [
+                                    "media/20261123125614-1dd5da/1.jpg"
+                                ],
+                      "status":  "pending"
                   }
               ]
 }
