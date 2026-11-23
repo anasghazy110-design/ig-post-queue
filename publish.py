@@ -65,6 +65,57 @@ def already_posted(item, token):
 
 
 def publish(item, token):
+    kind = item.get("kind", "ig_post")
+    if kind == "ig_story":
+        return publish_ig_story(item, token)
+    if kind == "fb_story":
+        return publish_fb_story(item, token)
+    return publish_ig_post(item, token)
+
+
+def publish_ig_story(item, token):
+    """Each image becomes one story frame. done_count lets a retry skip frames already up."""
+    ig = item["ig_id"]
+    last = item.get("ig_media_id")
+    for i, u in enumerate(item["images"][:10]):
+        if i < item.get("done_count", 0):
+            continue
+        c = call("POST", f"{ig}/media", {"image_url": u, "media_type": "STORIES", "access_token": token})["id"]
+        wait_ready(c, token)
+        last = call("POST", f"{ig}/media_publish", {"creation_id": c, "access_token": token}).get("id")
+        item["done_count"] = i + 1
+        item["ig_media_id"] = last
+    return last
+
+
+def publish_fb_story(item, token):
+    page = item["page_id"]
+    last = item.get("ig_media_id")
+    for i, u in enumerate(item["images"][:10]):
+        if i < item.get("done_count", 0):
+            continue
+        photo = call("POST", f"{page}/photos", {"url": u, "published": "false", "access_token": token})["id"]
+        r = call("POST", f"{page}/photo_stories", {"photo_id": photo, "access_token": token})
+        last = r.get("post_id") or r.get("id") or photo
+        item["done_count"] = i + 1
+        item["ig_media_id"] = last
+    return last
+
+
+def remove_unused_images(q):
+    """Delete image files of finished items, unless a still-pending item uses the same files."""
+    keep = set()
+    for it in q.get("posts", []):
+        if it and it.get("status") == "pending":
+            keep.update(it.get("paths", []))
+    for it in q.get("posts", []):
+        if it and it.get("status") == "published":
+            for p in it.get("paths", []):
+                if p not in keep and os.path.exists(p):
+                    os.remove(p)
+
+
+def publish_ig_post(item, token):
     ig = item["ig_id"]
     dup = already_posted(item, token)
     if dup:
@@ -97,7 +148,7 @@ def check_tokens():
             print(f"{name}: NOT WORKING - {e}")
 
 
-RESULT_KEYS = ("status", "ig_media_id", "published_at", "error", "attempts")
+RESULT_KEYS = ("status", "ig_media_id", "published_at", "error", "attempts", "done_count")
 
 
 def merge(mine_path):
@@ -116,10 +167,7 @@ def merge(mine_path):
                 item[k] = m[k]
             else:
                 item.pop(k, None)
-        if item.get("status") == "published":
-            for p in item.get("paths", []):
-                if os.path.exists(p):
-                    os.remove(p)
+    remove_unused_images(q)
     with open(QUEUE, "w", encoding="utf-8") as f:
         json.dump(q, f, ensure_ascii=False, indent=1)
 
@@ -152,10 +200,7 @@ def main():
             item["ig_media_id"] = media_id
             item["published_at"] = int(time.time())
             item.pop("error", None)
-            print(item["id"], "published", media_id)
-            for p in item.get("paths", []):
-                if os.path.exists(p):
-                    os.remove(p)
+            print(item["id"], item.get("kind", "ig_post"), "published", media_id)
         except Exception as e:
             item["attempts"] = item.get("attempts", 0) + 1
             item["error"] = str(e)[:500]
@@ -163,6 +208,7 @@ def main():
                 item["status"] = "failed"
             print(item["id"], "error:", item["error"])
     if changed:
+        remove_unused_images(q)
         with open(QUEUE, "w", encoding="utf-8") as f:
             json.dump(q, f, ensure_ascii=False, indent=1)
 
