@@ -70,7 +70,17 @@ def publish(item, token):
     return call("POST", f"{ig}/media_publish", {"creation_id": container, "access_token": token}).get("id")
 
 
+def check_tokens():
+    for name, tok in sorted(secrets.items()):
+        try:
+            me = call("GET", "me", {"fields": "id,name", "access_token": tok})
+            print(f"{name}: OK ({me.get('name')})")
+        except Exception as e:
+            print(f"{name}: NOT WORKING - {e}")
+
+
 def main():
+    check_tokens()
     if not os.path.exists(QUEUE):
         print("queue.json not found, nothing to do")
         return
