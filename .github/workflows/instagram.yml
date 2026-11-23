@@ -22,7 +22,13 @@ jobs:
         run: python3 publish.py
         env:
           IG_TOKEN_763726933494660: ${{ secrets.IG_TOKEN_763726933494660 }}
+          IG_TOKEN_347379155127502: ${{ secrets.IG_TOKEN_347379155127502 }}
+          IG_TOKEN_124413020755449: ${{ secrets.IG_TOKEN_124413020755449 }}
+          IG_TOKEN_113624588497766: ${{ secrets.IG_TOKEN_113624588497766 }}
           IG_TOKEN_369304739757772: ${{ secrets.IG_TOKEN_369304739757772 }}
+          IG_TOKEN_105424514337806: ${{ secrets.IG_TOKEN_105424514337806 }}
+          IG_TOKEN_103604014629507: ${{ secrets.IG_TOKEN_103604014629507 }}
+          IG_TOKEN_107848178160928: ${{ secrets.IG_TOKEN_107848178160928 }}
 
       - name: Save queue
         run: |
