@@ -51,8 +51,25 @@ def wait_ready(container_id, token):
     raise RuntimeError("Instagram took too long to process the image")
 
 
+def already_posted(item, token):
+    """Safety net: if one of the account's last 25 posts has the same caption,
+    return its id instead of publishing it again."""
+    cap = (item.get("caption") or "").strip()
+    if not cap:
+        return None
+    r = call("GET", f"{item['ig_id']}/media", {"fields": "id,caption,timestamp", "limit": "25", "access_token": token})
+    for m in r.get("data", []):
+        if (m.get("caption") or "").strip() == cap:
+            return m["id"]
+    return None
+
+
 def publish(item, token):
     ig = item["ig_id"]
+    dup = already_posted(item, token)
+    if dup:
+        print(item["id"], "already on Instagram, not posting again:", dup)
+        return dup
     urls = item["images"]
     if len(urls) == 1:
         container = call("POST", f"{ig}/media", {
