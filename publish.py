@@ -7,6 +7,7 @@ The access token comes from the repository secret IG_TOKEN_<page_id>.
 """
 import json
 import os
+import sys
 import time
 import urllib.error
 import urllib.parse
@@ -79,7 +80,37 @@ def check_tokens():
             print(f"{name}: NOT WORKING - {e}")
 
 
+RESULT_KEYS = ("status", "ig_media_id", "published_at", "error", "attempts")
+
+
+def merge(mine_path):
+    """Copy this run's results onto the latest queue.json (which the app may have
+    changed meanwhile: new posts added, posts cancelled)."""
+    with open(mine_path, encoding="utf-8") as f:
+        mine = {p["id"]: p for p in json.load(f).get("posts", []) if p}
+    with open(QUEUE, encoding="utf-8") as f:
+        q = json.load(f)
+    for item in q.get("posts", []):
+        m = mine.get(item.get("id"))
+        if not m:
+            continue
+        for k in RESULT_KEYS:
+            if k in m:
+                item[k] = m[k]
+            else:
+                item.pop(k, None)
+        if item.get("status") == "published":
+            for p in item.get("paths", []):
+                if os.path.exists(p):
+                    os.remove(p)
+    with open(QUEUE, "w", encoding="utf-8") as f:
+        json.dump(q, f, ensure_ascii=False, indent=1)
+
+
 def main():
+    if len(sys.argv) == 3 and sys.argv[1] == "merge":
+        merge(sys.argv[2])
+        return
     check_tokens()
     if not os.path.exists(QUEUE):
         print("queue.json not found, nothing to do")
