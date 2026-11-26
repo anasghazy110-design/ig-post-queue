@@ -203,7 +203,9 @@
     "media/20261124111630-7bac34/3.jpg",
     "media/20261124111630-7bac34/4.jpg"
    ],
-   "status": "pending"
+   "status": "published",
+   "ig_media_id": "17966021541219151",
+   "published_at": 1795708847
   },
   {
    "id": "20261124111630-7bac34-fb_story",
@@ -224,7 +226,10 @@
     "media/20261124111630-7bac34/3.jpg",
     "media/20261124111630-7bac34/4.jpg"
    ],
-   "status": "pending"
+   "status": "published",
+   "ig_media_id": "2739677279826828",
+   "published_at": 1795708866,
+   "done_count": 4
   },
   {
    "id": "20261124111630-7bac34-ig_story",
@@ -245,7 +250,10 @@
     "media/20261124111630-7bac34/3.jpg",
     "media/20261124111630-7bac34/4.jpg"
    ],
-   "status": "pending"
+   "status": "published",
+   "ig_media_id": "18094797329687641",
+   "published_at": 1795708914,
+   "done_count": 4
   },
   {
    "id": "20261124111714-227d28-ig_post",
