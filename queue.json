@@ -364,7 +364,9 @@
     "media/20261127183955-845206/3.jpg",
     "media/20261127183955-845206/4.jpg"
    ],
-   "status": "pending"
+   "status": "published",
+   "ig_media_id": "18113773745628348",
+   "published_at": 1795874444
   },
   {
    "id": "20261127183955-845206-fb_story",
@@ -385,7 +387,10 @@
     "media/20261127183955-845206/s3.jpg",
     "media/20261127183955-845206/s4.jpg"
    ],
-   "status": "pending"
+   "status": "published",
+   "ig_media_id": "3711864538980803",
+   "published_at": 1795874464,
+   "done_count": 4
   },
   {
    "id": "20261127183955-845206-ig_story",
@@ -406,7 +411,11 @@
     "media/20261127183955-845206/s3.jpg",
     "media/20261127183955-845206/s4.jpg"
    ],
-   "status": "pending"
+   "status": "pending",
+   "ig_media_id": "18137978408509443",
+   "error": "The requested resource does not exist",
+   "attempts": 1,
+   "done_count": 2
   },
   {
    "id": "20261127184103-c6c999-ig_post",
