@@ -411,11 +411,11 @@
     "media/20261127183955-845206/s3.jpg",
     "media/20261127183955-845206/s4.jpg"
    ],
-   "status": "pending",
-   "ig_media_id": "18137978408509443",
-   "error": "The requested resource does not exist",
+   "status": "published",
+   "ig_media_id": "18654590929063789",
    "attempts": 1,
-   "done_count": 2
+   "done_count": 4,
+   "published_at": 1795874725
   },
   {
    "id": "20261127184103-c6c999-ig_post",
